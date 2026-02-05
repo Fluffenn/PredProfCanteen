@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>📝 Регистрация ученика</h2>
+    </div>
+    <form method="POST">
+        <label>Полное ФИО:</label>
+        <input type="text" name="full_name" placeholder="Иванов Иван Иванович" required>
+        <label>Пароль (мин. 4 символа):</label>
+        <input type="password" name="password" minlength="4" required>
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+    <p style="margin-top: 15px;"><a href="{{ url_for('login') }}">Уже есть аккаунт? Войти</a></p>
+</div>
+{% endblock %}

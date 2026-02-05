@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>🍽️ Меню на {{ today }}</h2>
+    </div>
+
+    {% if allergen_warnings or preference_matches %}
+        <div style="background: #fff5f5; border-left: 4px solid #e53e3e; padding: 12px; margin-bottom: 15px; border-radius: 0 8px 8px 0;">
+            {% if allergen_warnings %}
+                <strong>⚠️ Внимание!</strong> У вас есть аллергия на: <em>{{ allergies_list }}</em>.
+            {% endif %}
+            {% if preference_matches %}
+                <br><strong>❤️ Рекомендуем!</strong> Есть блюда с вашими предпочтениями: <em>{{ preferences_list }}</em>.
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if menu_set %}
+        <!-- Завтрак -->
+        <div class="meal-card">
+            <h3>🕗 Завтрак — {{ "%.2f"|format(breakfast_price) }} ₽</h3>
+
+            {% set breakfast_dishes = [menu_set.breakfast_main, menu_set.breakfast_drink] %}
+            {% for dish in breakfast_dishes %}
+                <p>
+                    {% if dish %}
+                        {{ dish }}
+                        {% if allergen_warnings.get(dish) %}
+                            <span style="color: #e53e3e; font-weight: bold;"> ⚠️</span>
+                        {% endif %}
+                        {% if preference_matches.get(dish) %}
+                            <span style="color: #dd6b20; font-weight: bold;"> ❤️</span>
+                        {% endif %}
+                    {% endif %}
+                </p>
+            {% endfor %}
+
+            <div class="meal-actions">
+                {% if 'breakfast' not in taken_types %}
+                    <a href="{{ url_for('student_get_meal', meal_type='breakfast') }}" class="btn btn-success">Получить завтрак</a>
+                {% else %}
+                    <span class="btn btn-disabled">✅ Получено</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Обед -->
+        <div class="meal-card">
+            <h3>🕐 Обед — {{ "%.2f"|format(lunch_price) }} ₽</h3>
+
+            {% set lunch_dishes = [menu_set.lunch_first, menu_set.lunch_second, menu_set.lunch_drink] %}
+            {% for dish in lunch_dishes %}
+                <p>
+                    {% if dish %}
+                        {{ dish }}
+                        {% if allergen_warnings.get(dish) %}
+                            <span style="color: #e53e3e; font-weight: bold;"> ⚠️</span>
+                        {% endif %}
+                        {% if preference_matches.get(dish) %}
+                            <span style="color: #dd6b20; font-weight: bold;"> ❤️</span>
+                        {% endif %}
+                    {% endif %}
+                </p>
+            {% endfor %}
+
+            <div class="meal-actions">
+                {% if 'lunch' not in taken_types %}
+                    <a href="{{ url_for('student_get_meal', meal_type='lunch') }}" class="btn btn-success">Получить обед</a>
+                {% else %}
+                    <span class="btn btn-disabled">✅ Получено</span>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <div class="card" style="background: #fff5f5; border-left: 4px solid #e53e3e;">
+            <p>❌ Меню на сегодня не составлено.</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

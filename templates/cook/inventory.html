@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>📦 Склад и заявки</h2>
+    </div>
+
+    <h3>Текущие остатки:</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Продукт</th>
+                <th>Количество</th>
+                <th>Ед. изм.</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in inventory %}
+            <tr>
+                <td>{{ item.product_name }}</td>
+                <td>{{ "%.2f"|format(item.quantity) }}</td>
+                <td>{{ item.unit }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3 style="margin-top: 30px;">Подать заявку на закупку</h3>
+    <form method="POST">
+        <textarea name="items" rows="6"
+                  placeholder="Укажите продукты и количество (по одному на строку).&#10;Формат: Название Число&#10;&#10;Пример:&#10;Молоко 10&#10;Сахар 5&#10;Мука 8"
+                  required></textarea>
+        <button type="submit">Отправить заявку</button>
+    </form>
+
+    <h3 style="margin-top: 30px;">Ваши заявки:</h3>
+    {% if requests %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Содержание</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in requests %}
+                <tr>
+                    <td>{{ req.created_at[:10] }}</td>
+                    <td><pre>{{ req.items }}</pre></td>
+                    <td>
+                        {% if req.status == 'pending' %}
+                            ⏳ На рассмотрении
+                        {% elif req.status == 'approved' %}
+                            ✅ Одобрено
+                        {% else %}
+                            ❌ Отклонено
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Заявок нет.</p>
+    {% endif %}
+</div>
+{% endblock %}

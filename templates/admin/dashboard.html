@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>📊 Панель администратора</h2>
+    </div>
+
+    <h3>Статистика</h3>
+    <ul style="list-style: none; padding: 0;">
+        <li>💰 Общая сумма пополнений: <strong>{{ "%.2f"|format(stats.total_payments) }} ₽</strong></li>
+        <li>👥 Посещаемость сегодня: <strong>{{ stats.today_attendance }}</strong> учеников</li>
+        <li>🎓 Всего учеников: <strong>{{ stats.total_students }}</strong></li>
+    </ul>
+
+    <h3 style="margin-top: 30px;">📥 Заявки на закупку</h3>
+    {% if requests %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Повар</th>
+                    <th>Продукты</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in requests %}
+                <tr>
+                    <td>{{ req.full_name }}</td>
+                    <td><pre>{{ req.items }}</pre></td>
+                    <td>
+                        <a href="{{ url_for('admin_approve_request', req_id=req.id) }}"
+                           style="color: #27ae60; text-decoration: none;">✅ Одобрить</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Нет заявок.</p>
+    {% endif %}
+</div>
+{% endblock %}
