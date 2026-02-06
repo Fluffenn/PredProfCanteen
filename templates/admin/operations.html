@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>📋 Журнал операций</h2>
+    </div>
+
+    {% if operations %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Тип</th>
+                    <th>Подробности</th>
+                    <th>Ученик</th>
+                    <th>Дата и время</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for op in operations %}
+                <tr>
+                    <td>{{ op.type }}</td>
+                    <td>{{ op.detail }}</td>
+                    <td>{{ op.user }}</td>
+                    <td>{{ op.date[:19] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Операции не найдены.</p>
+    {% endif %}
+
+    <div style="margin-top: 20px;">
+        <a href="{{ url_for('admin_reports') }}" 
+           style="padding: 10px 20px; background: #4299e1; color: white; text-decoration: none; border-radius: 8px; font-weight: 600;">
+            ➕ Сформировать отчёт в Excel
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>🍽️ Пищевые предпочтения</h2>
+    </div>
+
+    <form method="POST">
+        <label>
+            <strong>Аллергии</strong><br>
+            <small>Перечислите через запятую (например: орехи, молоко)</small><br>
+            <input type="text" name="allergies" value="{{ profile.allergies or '' }}" placeholder="например: орехи, глютен">
+        </label>
+
+        <label style="margin-top: 20px;">
+            <strong>Пищевые предпочтения</strong><br>
+            <small>Что вы любите или избегаете (например: без мяса, веганское)</small><br>
+            <input type="text" name="preferences" value="{{ profile.preferences or '' }}" placeholder="например: без мяса">
+        </label>
+
+        <button type="submit" style="margin-top: 20px; background: #4299e1; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600;">
+            Сохранить
+        </button>
+    </form>
+</div>
+{% endblock %}

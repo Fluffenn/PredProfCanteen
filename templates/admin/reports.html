@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>📊 Формирование отчётов</h2>
+    </div>
+
+    <p>Выберите период для формирования отчёта:</p>
+
+    <div style="display: flex; gap: 15px; margin: 20px 0; flex-wrap: wrap;">
+        <a href="{{ url_for('admin_report_csv', period='all') }}"
+           style="flex: 1; min-width: 200px; text-align: center; padding: 12px; background: #4299e1; color: white; border-radius: 8px; text-decoration: none; font-weight: 600;">
+            📁 За всё время
+        </a>
+        <a href="{{ url_for('admin_report_csv', period='week') }}"
+           style="flex: 1; min-width: 200px; text-align: center; padding: 12px; background: #38a169; color: white; border-radius: 8px; text-decoration: none; font-weight: 600;">
+            📆 За неделю
+        </a>
+        <a href="{{ url_for('admin_report_csv', period='month') }}"
+           style="flex: 1; min-width: 200px; text-align: center; padding: 12px; background: #dd6b20; color: white; border-radius: 8px; text-decoration: none; font-weight: 600;">
+            📅 За месяц
+        </a>
+    </div>
+
+    <div style="margin-top: 30px; padding: 15px; background: #f0f9ff; border-radius: 10px; border-left: 4px solid #3182ce;">
+        <strong>ℹ️ Формат отчёта:</strong><br>
+        • Файл в формате <strong>CSV</strong><br>
+        • Все данные на русском языке<br>
+        • Названия файлов: <code>Отчёт_за_неделю_2026-02-05.csv</code><br>
+        • Открывается в Excel без кракозябр
+    </div>
+
+    <div style="margin-top: 20px;">
+        <a href="{{ url_for('admin_operations') }}"
+           style="display: block; text-align: center; padding: 12px; background: #ed8936; color: white; border-radius: 8px; text-decoration: none; font-weight: 600;">
+            👁️ Посмотреть операции на сайте
+        </a>
+    </div>
+</div>
+{% endblock %}

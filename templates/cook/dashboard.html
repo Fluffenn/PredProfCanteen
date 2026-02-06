@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>📤 Выданное питание сегодня</h2>
+    </div>
+    {% if records %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Ученик</th>
+                    <th>Тип</th>
+                    <th>Время</th>
+                    <th>Статус</th>
+                    <th>Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for rec in records %}
+                <tr>
+                    <td>{{ rec.full_name }}</td>
+                    <td>{{ rec.meal_type }}</td>
+                    <td>{{ rec.taken_at[11:16] }}</td>
+                    <td>
+                        {% if rec.confirmed %}
+                            ✅ Подтверждено
+                        {% else %}
+                            ⏳ Ожидает
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if not rec.confirmed %}
+                            <a href="{{ url_for('cook_confirm_meal', record_id=rec.id) }}"
+                               style="color: #27ae60; text-decoration: none;">Подтвердить</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Сегодня питание ещё не выдавалось.</p>
+    {% endif %}
+</div>
+{% endblock %}

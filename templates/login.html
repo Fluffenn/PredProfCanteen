@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>🔐 Вход в систему</h2>
+    </div>
+    <form method="POST">
+        <label>ФИО:</label>
+        <input type="text" name="full_name" placeholder="Введите ваше ФИО" required>
+        <label>Пароль:</label>
+        <input type="password" name="password" placeholder="••••••••" required>
+        <button type="submit">Войти</button>
+    </form>
+</div>
+{% endblock %}
